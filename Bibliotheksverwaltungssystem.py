@@ -42,7 +42,7 @@ class Library:
                 if book.is_available:
                     book.is_available = False
                 else:
-                    print("Das gewünschte Buch ist nicht verfügbar.")
+                    print("Das gewünschte Buch ist bereits verliehen.")
         if not found_book:
             print("Das gewünschte Buch ist nicht verfügbar.")
 
@@ -53,6 +53,15 @@ class Library:
                 found_book = True
                 if not book.is_available:
                     book.is_available = True
+        if not found_book:
+            print("Das gewünschte Buch ist nicht verfügbar.")
+    
+    def search_by_author(self, author):
+        found_book = False
+        for book in self.books:
+            if book.author.lower == author.lower():
+                print(book)
+                found_book = True
         if not found_book:
             print("Das gewünschte Buch ist nicht verfügbar.")
 
