@@ -12,25 +12,53 @@ class Book:
     @isbn.setter
     def isbn(self, value):
         self._isbn = value
+    
+    def __str__(self):
+        return(f"Titel: {self.title}\nAutor: {self.author}\nISBN: {self.isbn}\nAvailable: {self.is_available}\n")
+
 
 class Library:
+    def __init__(self):
+        self.books = []
+
     def add_book(self, book):
-        ...
+        self.books.append(book)
     
     def find_book_by_isbn(self, isbn):
-        ...
+        for book in self.books:
+            if book.isbn == isbn:
+                print(book)
 
-    def list_available_bookd(self):
-        ...
+    def list_available_books(self):
+        for book in self.books:
+            if book.is_available:
+                print(book)
     
-    def borrow_book(isbn):
-        ...
+    def borrow_book(self, isbn):
+        found_book = False
+        for book in self.books:
+            if book.isbn == isbn:
+                found_book = True
+                if book.is_available:
+                    book.is_available = False
+                else:
+                    print("Das gewünschte Buch ist nicht verfügbar.")
+        if not found_book:
+            print("Das gewünschte Buch ist nicht verfügbar.")
 
-    def return_book(isbn):
-        ...
+    def return_book(self, isbn):
+        found_book = False
+        for book in self.books:
+            if book.isbn == isbn:
+                found_book = True
+                if not book.is_available:
+                    book.is_available = True
+        if not found_book:
+            print("Das gewünschte Buch ist nicht verfügbar.")
 
 def main():
-    ...
+    ... 
+    
 
 if __name__ == "__main__":
     main()
