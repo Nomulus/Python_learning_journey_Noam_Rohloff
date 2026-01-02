@@ -23,16 +23,18 @@ class Library:
 
     def add_book(self, book):
         self.books.append(book)
+        return self.books
     
     def find_book_by_isbn(self, isbn):
         for book in self.books:
             if book.isbn == isbn:
-                print(book)
+                return(book)
 
     def list_available_books(self):
+        available_books = []
         for book in self.books:
             if book.is_available:
-                print(book)
+                available_books.append(book)
     
     def borrow_book(self, isbn):
         found_book = False
@@ -60,14 +62,13 @@ class Library:
         found_book = False
         for book in self.books:
             if book.author.lower == author.lower():
-                print(book)
+                yield(book)
                 found_book = True
         if not found_book:
             print("Das gewünschte Buch ist nicht verfügbar.")
 
 def main():
-    ... 
-    
+    book = Book("Titel", "Autor", "ISBN", True)
 
 if __name__ == "__main__":
     main()
