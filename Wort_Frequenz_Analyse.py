@@ -52,9 +52,9 @@ def main():
     print(text_analyzer)
     write_to_file(text_analyzer, "top_words.txt")
 
-def write_to_file(to_write, filename):
+def write_to_file(text_analyzer, filename):
     with open(filename, "w") as file:
-        file.write(to_write)
+        file.write(str(text_analyzer))
 
 
 if __name__ == "__main__":
