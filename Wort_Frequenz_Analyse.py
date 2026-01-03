@@ -10,15 +10,10 @@ class TextAnalyzer():
         words = text.split()
         text_ohne_sonderzeichnen_und_stopwords = []
         for word in words:
-            word.strip(".,!?;:")
-            
-            found_stop = False
-            for stop in self.stopwords:
-                if stop == word:
-                    found_stop = True
-                    break
-            if not found_stop:
+            word = word.strip(".,!?;:")
+            if word and word not in self.stopwords:
                 text_ohne_sonderzeichnen_und_stopwords.append(word)
+        self.longest_word = max(text_ohne_sonderzeichnen_und_stopwords, key = len) if text_ohne_sonderzeichnen_und_stopwords else ""
         return text_ohne_sonderzeichnen_und_stopwords
     
     def __str__(self):
@@ -26,11 +21,9 @@ class TextAnalyzer():
     
     def concatenate_counter(self):
         zeilen = []
+        zeilen.append(f"\n{self.longest_word} ist das längste Wort\n")
         for i , pair in enumerate(self.counter.most_common(10)):
-            if i == 0:
-                zeilen.append(f"\n{pair[0].title()} wurde mit {pair[1]} Wierderholungen am meisten wiederholt!")
-            else:
-                zeilen.append(f"{i+1}: {pair[0]}: {pair[1]} Wiederholungen")
+            zeilen.append(f"{i+1}: {pair[0]}: {pair[1]} Wiederholungen")
         return "\n".join(zeilen)
 
     @property
