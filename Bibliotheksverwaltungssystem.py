@@ -28,7 +28,7 @@ class Library:
     def find_book_by_isbn(self, isbn):
         for book in self.books:
             if book.isbn == isbn:
-                return(str(book))
+                return book
 
     def list_available_books(self):
         available_books = []
@@ -44,9 +44,9 @@ class Library:
                 if book.is_available:
                     book.is_available = False
                 else:
-                    print("Das gewünschte Buch ist bereits verliehen.")
+                    raise ValueError("Das gewünschte Buch ist bereits verliehen.")
         if not found_book:
-            print("Das gewünschte Buch ist nicht verfügbar.")
+            raise ValueError("Das gewünschte Buch ist nicht verfügbar.")
 
     def return_book(self, isbn):
         found_book = False
@@ -56,13 +56,13 @@ class Library:
                 if not book.is_available:
                     book.is_available = True
         if not found_book:
-            print("Das gewünschte Buch ist nicht verfügbar.")
+            raise ValueError("Das gewünschte Buch ist nicht verfügbar.")
     
     def search_by_author(self, author):
         for book in self.books:
-            if book.author.lower == author.lower():
+            if book.author.lower() == author.lower():
                 return book
-        print("Das gewünschte Buch ist nicht verfügbar.")
+        raise ValueError("Das gewünschte Buch ist nicht verfügbar.")
 
 def main():
     book = Book("Titel", "Autor", "ISBN", True)

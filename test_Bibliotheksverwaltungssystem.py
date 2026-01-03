@@ -2,17 +2,37 @@ import pytest
 from Bibliotheksverwaltungssystem import Library
 from Bibliotheksverwaltungssystem import Book
 
-book = Book("Titel", "Autor", "ISBN", True)
-book2 = Book("Me and I", "Me", "ABCD", True)
-library = Library()
+@pytest.fixture 
+def book1():
+    return Book("Titel", "Autor", "ISBN", True)
 
-def test_Book():
-    assert book.title == "Titel"
-    assert book.author == "Autor"
-    assert book.isbn == "ISBN"
-    assert book.is_available == True
+@pytest.fixture
+def book2():
+    return Book("Me and I", "Me", "ABCD", True)
 
-def test_Library():
-    library.add_book(book) 
-    library.borrow_book(book.isbn)
-    assert library.find_book_by_isbn(book.isbn) == "Titel: Titel\nAutor: Autor\nISBN: ISBN\nAvailable: False\n"
+@pytest.fixture
+def library_with_two_books(book1, book2):
+    lib = Library()
+    lib.add_book(book1) 
+    lib.add_book(book2) 
+    return lib
+
+def test_book_attributes_initialization(book1):
+    assert book1.title == "Titel"
+    assert book1.author == "Autor"
+    assert book1.isbn == "ISBN"
+    assert book1.is_available == True
+
+def test_Library_borrow(library_with_two_books, book1):
+    library_with_two_books.borrow_book(book1.isbn)
+    assert book1.is_available == False
+
+def test_Library_return(library_with_two_books, book1):
+    library_with_two_books.borrow_book(book1.isbn)
+    library_with_two_books.return_book(book1.isbn)
+    assert book1.is_available == True
+
+def test_Library_borrow_unavailable_book(library_with_two_books, book1):
+    library_with_two_books.borrow_book(book1.isbn)
+    with pytest.raises(ValueError):
+        library_with_two_books.borrow_book(book1.isbn)
