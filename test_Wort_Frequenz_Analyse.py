@@ -25,3 +25,6 @@ def test_analyze_if_no_text_given(standard_text_analyzer):
 def test_analyze_raises_error(standard_text_analyzer):
     with pytest.raises(TypeError):
         standard_text_analyzer.analyze()
+
+def test_longest_word(standard_text_analyzer):
+    assert standard_text_analyzer.longest_word == "flüchtiges"
