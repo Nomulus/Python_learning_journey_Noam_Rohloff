@@ -7,12 +7,10 @@ class TextAnalyzer():
 
     def analyze(self, text):
         text = text.lower()
-        words = text.split(" ")
+        words = text.split()
         text_ohne_sonderzeichnen_und_stopwords = []
         for word in words:
-            for zeichen in self.sonderzeichen:
-                if zeichen in word:
-                    word = word.strip(zeichen)
+            word.strip(".,!?;:")
             
             found_stop = False
             for stop in self.stopwords:
@@ -35,10 +33,6 @@ class TextAnalyzer():
                 zeilen.append(f"{i+1}: {pair[0]}: {pair[1]} Wiederholungen")
         return "\n".join(zeilen)
 
-    @property
-    def sonderzeichen(self):
-        return {".", ",", "!", "?", ";", ":"}
-    
     @property
     def stopwords(self):
         return {'der', 'die', 'das', 'dem', 'den', 'des', 'ein', 'eine', 'einer', 'einem', 'einen', 'eines',
