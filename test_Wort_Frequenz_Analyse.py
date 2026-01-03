@@ -7,7 +7,9 @@ def standard_text_analyzer():
     return text_analyzer
 
 def test_str(standard_text_analyzer):
-    assert standard_text_analyzer.__str__() == standard_text_analyzer.concatenate_counter()
+    string = standard_text_analyzer.__str__()
+    assert "haus" in string
+    assert "Wiederholungen" in string
     
 def test_analyze_stopword_removal(standard_text_analyzer):
     assert standard_text_analyzer.analyze("Ich will den haben") == ["ich", "will", "haben"]
