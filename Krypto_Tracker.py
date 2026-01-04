@@ -45,7 +45,7 @@ def load_price_and_date(file_name):
 def compare_data(loaded_price, loaded_date, price_now, time_now):
     timedelta = time_now - loaded_date
     price_difference = price_now - loaded_price
-    print(f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {price_difference} CHF")
+    print(f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {"+" if price_difference > 0 else ""}{price_difference} CHF")
     if timedelta.days >= 1:
         print(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden")
     elif timedelta.seconds > 3600:
