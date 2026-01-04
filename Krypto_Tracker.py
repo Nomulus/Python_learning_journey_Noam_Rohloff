@@ -38,13 +38,13 @@ def compare_data(loaded_price, loaded_date, price_now, time_now):
     price_difference = price_now - loaded_price
     print(f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {price_difference} CHF")
     if timedelta.days > 1:
-        print(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds / 60 / 60)} Stunden, {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds % 60} Sekunden")
+        print(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden")
     elif timedelta.seconds <= 60:
         print(f"Letzte Abfrage vor: {int(timedelta.seconds)} Sekunden")
     elif timedelta.seconds > 60 and timedelta.seconds <=  3600:
         print(f"Letzte Abfrage vor: {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds %60} Sekunden")
     elif timedelta.seconds > 3600 and timedelta.seconds < 86400:
-        print(f"Letzte Abfrage vor: {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds % 60 } Sekunden")
+        print(f"Letzte Abfrage vor: {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60 } Sekunden")
 
 
 if __name__ == "__main__":
