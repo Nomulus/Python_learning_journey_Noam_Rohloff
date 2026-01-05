@@ -1,7 +1,6 @@
 import requests
 import datetime
 import json
-import time
 
 def main():
     loaded_price, loaded_date = try_load_data("price_over_time.json")
