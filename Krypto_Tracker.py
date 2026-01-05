@@ -11,7 +11,7 @@ def main():
 
     write_current_price_and_date(price_now, time_now)
 
-    compare_data(loaded_price, loaded_date, price_now, time_now)
+    print(compare_price(price_now, loaded_price), compare_date(loaded_date, time_now))
 
 def get_current_price_and_date():
     request = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=chf").json()
@@ -34,25 +34,26 @@ def try_load_data(file_name):
         loaded_price, loaded_date = None, None
     return loaded_price, loaded_date
 
-
-
 def load_price_and_date(file_name):
     with open(file_name, "r") as file:
         data = json.load(file)
         return data[0], datetime.datetime.fromisoformat(data[1])
 
-def compare_data(loaded_price, loaded_date, price_now, time_now):
-    timedelta = time_now - loaded_date
+def compare_price(price_now, loaded_price):
     price_difference = price_now - loaded_price
-    print(f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {"+" if price_difference > 0 else ""}{price_difference} CHF")
+    return (f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {"+" if price_difference > 0 else ""}{price_difference} CHF")
+
+def compare_date(loaded_date, time_now):
+    timedelta = time_now - loaded_date
     if timedelta.days >= 1:
-        print(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden")
+        return(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden")
     elif timedelta.seconds > 3600:
-        print(f"Letzte Abfrage vor: {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60 } Sekunden")
+        return(f"Letzte Abfrage vor: {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60 } Sekunden")
     elif timedelta.seconds > 60: 
-        print(f"Letzte Abfrage vor: {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds %60} Sekunden")
+        return(f"Letzte Abfrage vor: {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds %60} Sekunden")
     else:
-        print(f"Letzte Abfrage vor: {int(timedelta.seconds)} Sekunden")
+        return(f"Letzte Abfrage vor: {int(timedelta.seconds)} Sekunden")
+    
 
 
 
