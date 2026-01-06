@@ -40,8 +40,8 @@ class TextAnalyzer():
 def main():
     text_analyzer = TextAnalyzer("Das Haus ist groß, und in dem Haus ist es schön! Doch nicht jeder in dem Haus ist glücklich. Das Glück ist ein flüchtiges Gut, besonders in einem Haus, das mit Sorgen gefüllt ist. Ist das Haus erst einmal leer, ist es still.")
     print(text_analyzer.get_words_by_threshold(2))
-    #print(text_analyzer)
-    #write_to_file(text_analyzer, "top_words.txt")
+    print(text_analyzer)
+    write_to_file(text_analyzer, "top_words.txt")
 
 def write_to_file(text_analyzer, filename):
     with open(filename, "w") as file:
