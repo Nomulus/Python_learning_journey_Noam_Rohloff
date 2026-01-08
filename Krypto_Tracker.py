@@ -3,21 +3,24 @@ import customtkinter
 import datetime
 import json
 
+class InputFrame(customtkinter.CTkFrame):
+    def __init__(self, master):
+        super().__init__(master)
+        paste_comparison_button = customtkinter.CTkButton(self, text="get and compare Bitcoin price to last time", command=get_price)
+        paste_comparison_button.grid(row=0, column=0, padx=20, pady=20)
+
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("Krypto Tracker by Noam")
         self.geometry("350x300")
         self.grid_columnconfigure(0, weight = 1)
-        paste_comparison_button = customtkinter.CTkButton(self, text="get and compare Bitcoin price to last time", command=get_price)
-        paste_comparison_button.grid(row=0, column=0, padx=20, pady=20)
+        self.grid_rowconfigure(0, weight = 1)
 
-        
+        #hier bin ich grad dran
 
 def main():
     app = App()
-
-
     app.mainloop()
 
 
