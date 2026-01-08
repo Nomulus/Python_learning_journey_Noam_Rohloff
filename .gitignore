@@ -10,7 +10,6 @@
 *.userosscache
 *.sln.docstates
 *.env
-*.venv
 *.price_over_time.json
 
 
