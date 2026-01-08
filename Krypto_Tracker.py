@@ -1,8 +1,27 @@
 import requests
+import customtkinter
 import datetime
 import json
 
+class App(customtkinter.CTk):
+    def __init__(self):
+        super().__init__()
+        self.title("Krypto Tracker by Noam")
+        self.geometry("350x300")
+        self.grid_columnconfigure(0, weight = 1)
+        paste_comparison_button = customtkinter.CTkButton(self, text="get and compare Bitcoin price to last time", command=get_price)
+        paste_comparison_button.grid(row=0, column=0, padx=20, pady=20)
+
+        
+
 def main():
+    app = App()
+
+
+    app.mainloop()
+
+
+def get_price():
     loaded_price, loaded_date = try_load_data("price_over_time.json")
     if not loaded_price and not loaded_date:
         loaded_price, loaded_date = 72262, datetime.datetime.fromisoformat("2026-01-04 21:10:06.271862")
