@@ -17,6 +17,9 @@ class CheckBoxFrame(customtkinter.CTkFrame):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
+        self._set_appearance_mode("System")
+        customtkinter.set_default_color_theme("themes/metal.json")
+
         self.title("Krypto Tracker by Noam")
         self.geometry("350x300")
         self.grid_columnconfigure(0, weight=1)
