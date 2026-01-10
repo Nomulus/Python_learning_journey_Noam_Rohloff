@@ -3,21 +3,26 @@ import customtkinter
 import datetime
 import json
 
+
 class InputFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        paste_comparison_button = customtkinter.CTkButton(self, text="get and compare Bitcoin price to last time", command=get_price)
-        paste_comparison_button.grid(row=0, column=0, padx=20, pady=20)
+        comparison_button = customtkinter.CTkButton(
+            self, text="get and compare Bitcoin price to last time", command=get_price
+        )
+        comparison_button.grid(row=0, column=0, padx=20, pady=20)
+
 
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("Krypto Tracker by Noam")
         self.geometry("350x300")
-        self.grid_columnconfigure(0, weight = 1)
-        self.grid_rowconfigure(0, weight = 1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        #hier bin ich grad dran
+        # hier bin ich grad dran
+
 
 def main():
     app = App()
@@ -27,7 +32,10 @@ def main():
 def get_price():
     loaded_price, loaded_date = try_load_data("price_over_time.json")
     if not loaded_price and not loaded_date:
-        loaded_price, loaded_date = 72262, datetime.datetime.fromisoformat("2026-01-04 21:10:06.271862")
+        loaded_price, loaded_date = (
+            72262,
+            datetime.datetime.fromisoformat("2026-01-04 21:10:06.271862"),
+        )
 
     price_now, time_now = get_current_price_and_date()
 
@@ -35,8 +43,11 @@ def get_price():
 
     print(compare_price(price_now, loaded_price), compare_date(loaded_date, time_now))
 
+
 def get_current_price_and_date():
-    request = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=chf").json()
+    request = requests.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=chf"
+    ).json()
     try:
         price_now = (request["bitcoin"]["chf"],)[0]
     except KeyError:
@@ -44,9 +55,11 @@ def get_current_price_and_date():
     time_now = datetime.datetime.now()
     return price_now, time_now
 
+
 def write_current_price_and_date(price_now, time_now):
     with open("price_over_time.json", "w") as file:
         json.dump([price_now, time_now.isoformat()], file)
+
 
 def try_load_data(file_name):
     try:
@@ -56,27 +69,28 @@ def try_load_data(file_name):
         loaded_price, loaded_date = None, None
     return loaded_price, loaded_date
 
+
 def load_price_and_date(file_name):
     with open(file_name, "r") as file:
         data = json.load(file)
         return data[0], datetime.datetime.fromisoformat(data[1])
 
+
 def compare_price(price_now, loaded_price):
     price_difference = price_now - loaded_price
-    return (f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {"+" if price_difference > 0 else ""}{price_difference} CHF")
+    return f"Aktueller Preis: {price_now} CHF\nVeraenderung seit der letzten Abfrage: {'+' if price_difference > 0 else ''}{price_difference} CHF"
+
 
 def compare_date(loaded_date, time_now):
     timedelta = time_now - loaded_date
     if timedelta.days >= 1:
-        return(f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden")
+        return f"Letzte Abfrage vor: {int(timedelta.days)} Tagen, {int(timedelta.seconds / 60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden"
     elif timedelta.seconds > 3600:
-        return(f"Letzte Abfrage vor: {int(timedelta.seconds /60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60 } Sekunden")
-    elif timedelta.seconds > 60: 
-        return(f"Letzte Abfrage vor: {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds %60} Sekunden")
+        return f"Letzte Abfrage vor: {int(timedelta.seconds / 60 / 60)} Stunden, {int(timedelta.seconds / 60 % 60)} Minuten und {timedelta.seconds % 60} Sekunden"
+    elif timedelta.seconds > 60:
+        return f"Letzte Abfrage vor: {int(timedelta.seconds / 60)} Minuten und {timedelta.seconds % 60} Sekunden"
     else:
-        return(f"Letzte Abfrage vor: {int(timedelta.seconds)} Sekunden")
-    
-
+        return f"Letzte Abfrage vor: {int(timedelta.seconds)} Sekunden"
 
 
 if __name__ == "__main__":
