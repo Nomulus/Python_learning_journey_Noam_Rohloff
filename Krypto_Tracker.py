@@ -4,13 +4,14 @@ import datetime
 import json
 
 
-class InputFrame(customtkinter.CTkFrame):
+class CheckBoxFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        comparison_button = customtkinter.CTkButton(
-            self, text="get and compare Bitcoin price to last time", command=get_price
-        )
-        comparison_button.grid(row=0, column=0, padx=20, pady=20)
+
+        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
+        self.checkbox_old_price.grid(row=0, column=0, padx=10, dady=(10, 0), sticky="w")
+        self.checkbox_time_offsetn = customtkinter.CTkCheckBox(self, text="show old price")
+        self.checkbox_time_offsetn.grid(row=0, column=0, padx=10, dady=(10, 0), sticky="w")
 
 
 class App(customtkinter.CTk):
@@ -21,7 +22,11 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        # hier bin ich grad dran
+        self.checkbox_frame = CheckBoxFrame(self)
+
+
+        self.comparison_button = customtkinter.CTkButton( self, text="get and compare Bitcoin price to last time", command=get_price)
+        self.comparison_button.grid(row=0, column=0, padx=20, pady=(20, 0) , sticky ="w")
 
 
 def main():
