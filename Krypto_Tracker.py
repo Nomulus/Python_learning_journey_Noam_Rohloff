@@ -9,9 +9,25 @@ class CheckBoxFrame(customtkinter.CTkFrame):
         super().__init__(master)
 
         self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
-        self.checkbox_old_price.grid(row=0, column=0, padx=10, dady=(10, 0), sticky="w")
-        self.checkbox_time_offsetn = customtkinter.CTkCheckBox(self, text="show old price")
-        self.checkbox_time_offsetn.grid(row=0, column=0, padx=10, dady=(10, 0), sticky="w")
+        self.checkbox_old_price.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.checkbox_time_offset = customtkinter.CTkCheckBox(
+            self, text="show old price"
+        )
+        self.checkbox_time_offset.grid(
+            row=0, column=0, padx=10, pady=(10, 0), sticky="w"
+        )
+
+        self.checkbox_light_mode = customtkinter.CTkCheckBox(self, text="light mode")
+        self.checkbox_light_mode.grid(
+            row=0, column=1, padx=10, pady=(10, 0), sticky="w"
+        )
+        self.light_mode = customtkinter.StringVar(value="off")
+
+    def set_appearance_mode(self):
+        if self.light_mode.get() == "on":
+            self._set_appearance_mode("light")
+        else:
+            self._set_appearance_mode("dark")
 
 
 class App(customtkinter.CTk):
@@ -25,11 +41,13 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.checkbox_frame = CheckBoxFrame(self)
+        self.checkbox_frame = customtkinter.CTkFrame(self)
+        self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
 
-
-        self.comparison_button = customtkinter.CTkButton( self, text="get and compare Bitcoin price to last time", command=get_price)
-        self.comparison_button.grid(row=0, column=0, padx=20, pady=(20, 0) , sticky ="w")
+        self.comparison_button = customtkinter.CTkButton(
+            self, text="get and compare Bitcoin price to last time", command=get_price
+        )
+        self.comparison_button.grid(row=0, column=1, padx=20, pady=(20, 0), sticky="w")
 
 
 def main():
