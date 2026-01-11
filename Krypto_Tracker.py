@@ -8,18 +8,9 @@ class CheckBoxFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
-        self.checkbox_old_price.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
-        self.checkbox_time_offset = customtkinter.CTkCheckBox(
-            self, text="show old price"
-        )
-        self.checkbox_time_offset.grid(
-            row=0, column=0, padx=10, pady=(10, 0), sticky="w"
-        )
-
         self.checkbox_light_mode = customtkinter.CTkCheckBox(self, text="light mode")
         self.checkbox_light_mode.grid(
-            row=0, column=1, padx=10, pady=(10, 0), sticky="w"
+            row=0, column=0, padx=10, pady=(10, 0), sticky="w"
         )
         self.light_mode = customtkinter.StringVar(value="off")
 
@@ -29,25 +20,34 @@ class CheckBoxFrame(customtkinter.CTkFrame):
         else:
             self._set_appearance_mode("dark")
 
+        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
+        self.checkbox_old_price.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.checkbox_time_offset = customtkinter.CTkCheckBox(
+            self, text="show time offset"
+        )
+        self.checkbox_time_offset.grid(
+            row=3, column=0, padx=10, pady=(10, 0), sticky="w"
+        )
+
 
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self._set_appearance_mode("System")
+        self._set_appearance_mode("dark")
         customtkinter.set_default_color_theme("themes/metal.json")
 
         self.title("Krypto Tracker by Noam")
         self.geometry("350x300")
-        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=0)
         self.grid_rowconfigure(0, weight=1)
 
-        self.checkbox_frame = customtkinter.CTkFrame(self)
+        self.checkbox_frame = CheckBoxFrame(self)
         self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
 
         self.comparison_button = customtkinter.CTkButton(
             self, text="get and compare Bitcoin price to last time", command=get_price
         )
-        self.comparison_button.grid(row=0, column=1, padx=20, pady=(20, 0), sticky="w")
+        self.comparison_button.grid(row=0, column=1, padx=10, pady=(20, 0), sticky="w")
 
 
 def main():
