@@ -8,26 +8,34 @@ class CheckBoxFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.checkbox_light_mode = customtkinter.CTkCheckBox(self, text="light mode")
+        self.light_mode_var = customtkinter.BooleanVar(value=False)
+
+        self.checkbox_light_mode = customtkinter.CTkCheckBox(
+            self,
+            text="light mode",
+            command=self.appearance_mode,
+            variable=self.light_mode_var,
+            onvalue=True,
+            offvalue=False,
+        )
         self.checkbox_light_mode.grid(
             row=0, column=0, padx=10, pady=(10, 0), sticky="w"
         )
-        self.light_mode = customtkinter.StringVar(value="off")
-
-    def set_appearance_mode(self):
-        if self.light_mode.get() == "on":
-            self._set_appearance_mode("light")
-        else:
-            self._set_appearance_mode("dark")
 
         self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
-        self.checkbox_old_price.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.checkbox_old_price.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
         self.checkbox_time_offset = customtkinter.CTkCheckBox(
             self, text="show time offset"
         )
         self.checkbox_time_offset.grid(
-            row=3, column=0, padx=10, pady=(10, 0), sticky="w"
+            row=2, column=0, padx=10, pady=(10, 0), sticky="w"
         )
+
+    def appearance_mode(self):
+        if self.light_mode_var.get():
+            customtkinter.set_appearance_mode("light")
+        else:
+            customtkinter.set_appearance_mode("dark")
 
 
 class App(customtkinter.CTk):
