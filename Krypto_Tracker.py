@@ -8,10 +8,23 @@ class CheckBoxFrame_left(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
+        self.old_price_var = customtkinter.BooleanVar(value=True)
+        self.checkbox_old_price = customtkinter.CTkCheckBox(
+            self,
+            text="hide old price",
+            variable=self.old_price_var,
+            offvalue=True,
+            onvalue=False,
+        )
         self.checkbox_old_price.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
+
+        self.time_offset_var = customtkinter.BooleanVar(value=True)
         self.checkbox_time_offset = customtkinter.CTkCheckBox(
-            self, text="show time offset"
+            self,
+            variable=self.time_offset_var,
+            offvalue=True,
+            onValue=False,
+            text="hide time offset",
         )
         self.checkbox_time_offset.grid(
             row=2, column=0, padx=10, pady=(10, 0), sticky="w"
@@ -94,6 +107,8 @@ def get_current_price_and_date():
         price_now = (request["bitcoin"]["chf"],)[0]
     except KeyError:
         raise SystemExit("rate Limit has been exceeded.")
+    except ConnectionError:
+        raise SystemExit("failed to connect to service")
     time_now = datetime.datetime.now()
     return price_now, time_now
 
