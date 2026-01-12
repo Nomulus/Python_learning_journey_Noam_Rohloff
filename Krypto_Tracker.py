@@ -63,9 +63,7 @@ class App(customtkinter.CTk):
         self.comparison_button = customtkinter.CTkButton(
             self, text="get and compare Bitcoin price to last time", command=get_price
         )
-        self.comparison_button.grid(
-            row=0, column=1, padx=10, pady=(20, 0), sticky="nsw"
-        )
+        self.comparison_button.grid(row=0, column=1, padx=20, pady=(40, 20), sticky="n")
 
 
 def main():
