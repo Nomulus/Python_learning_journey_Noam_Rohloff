@@ -4,7 +4,21 @@ import datetime
 import json
 
 
-class CheckBoxFrame(customtkinter.CTkFrame):
+class CheckBoxFrame_left(customtkinter.CTkFrame):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
+        self.checkbox_old_price.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.checkbox_time_offset = customtkinter.CTkCheckBox(
+            self, text="show time offset"
+        )
+        self.checkbox_time_offset.grid(
+            row=2, column=0, padx=10, pady=(10, 0), sticky="w"
+        )
+
+
+class CheckBoxFrame_right(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
@@ -20,15 +34,6 @@ class CheckBoxFrame(customtkinter.CTkFrame):
         )
         self.checkbox_light_mode.grid(
             row=0, column=0, padx=10, pady=(10, 0), sticky="w"
-        )
-
-        self.checkbox_old_price = customtkinter.CTkCheckBox(self, text="show old price")
-        self.checkbox_old_price.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
-        self.checkbox_time_offset = customtkinter.CTkCheckBox(
-            self, text="show time offset"
-        )
-        self.checkbox_time_offset.grid(
-            row=2, column=0, padx=10, pady=(10, 0), sticky="w"
         )
 
     def appearance_mode(self):
@@ -49,13 +54,18 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(0, weight=0)
         self.grid_rowconfigure(0, weight=1)
 
-        self.checkbox_frame = CheckBoxFrame(self)
+        self.checkbox_frame = CheckBoxFrame_left(self)
         self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
+
+        self.checkbox_frame = CheckBoxFrame_right(self)
+        self.checkbox_frame.grid(row=0, column=2, padx=10, pady=(10, 0), sticky="nsw")
 
         self.comparison_button = customtkinter.CTkButton(
             self, text="get and compare Bitcoin price to last time", command=get_price
         )
-        self.comparison_button.grid(row=0, column=1, padx=10, pady=(20, 0), sticky="w")
+        self.comparison_button.grid(
+            row=0, column=1, padx=10, pady=(20, 0), sticky="nsw"
+        )
 
 
 def main():
