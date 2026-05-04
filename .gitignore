@@ -418,3 +418,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+.venv
+price_over_time.json
+price_over_time.json
+price_over_time.json
