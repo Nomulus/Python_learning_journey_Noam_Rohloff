@@ -55,7 +55,7 @@ class Excercise():
 
 class Workout():
     def __init__(self, name, *excercises)-> None:
-        self.name = name
+        self._name = name
         self.excercises = excercises
     
     def calculate_total_Volume(self) -> float:
@@ -64,12 +64,30 @@ class Workout():
             Volume += excercise.Volume()
         return Volume
     
+    def get_heaviest_excercise(self):
+        heaviest_excercise = Excercise("heaviest", 0, 0)
+        for excercise in self.excercises:
+            if excercise.Volume() > heaviest_excercise.Volume():
+                heaviest_excercise = excercise
+        return heaviest_excercise
+    
+    def print_workout_report(self, threshold):
+        print(self._name, "Workout Report:")
+        for excercise in self.excercises:
+            if excercise._weight < threshold:
+                print(excercise._name, excercise._weight, excercise._reps, "(Warm Up)") #könnte hier einen generator machen oder eine neue Liste anstatt diese Side effects zu kreieren, habe aber zu wenig Zeit um mir viel Gedanken zu machen
+            else:
+                print(excercise._name, excercise._weight, excercise._reps)
+
+            
+    
 
 def main() -> None:
+    shoulder = Excercise("shoulder", 5, 15)
     pull_down = Excercise("pull_down", 60, 10)
     overhead_tryceps_extencion = Excercise("overhead_tryceps_extencion", 32, 10)
 
-    pull_day= Workout("pull_day", pull_down, overhead_tryceps_extencion)
+    pull_day= Workout("pull_day", shoulder, pull_down, overhead_tryceps_extencion)
 
     bench_press = Excercise("bench_press", 70, 10)
     incline_bench_press = Excercise("incline_bench_press", 50, 10)
@@ -80,8 +98,15 @@ def main() -> None:
     for excercise in pull_day.excercises:
         print(f"You moved {excercise.volume} kg with {excercise._name}")
 
-    print(f"Your Workout Volume for push day comes out to {push_day.calculate_total_Volume()} kg, well done.")
+    print(f"Your Workout Volume for push day comes out to {push_day.calculate_total_Volume()} kg, well done.\nYour heaviest excercise was {push_day.get_heaviest_excercise()._name} with {push_day.get_heaviest_excercise().volume} kg")
 
+    history(pull_day, push_day)
+
+
+def history(*workouts):
+    for workout in workouts:
+        workout.print_workout_report(70)
+        print(workout.get_heaviest_excercise()._name)
 
 
 if __name__ == "__main__":
