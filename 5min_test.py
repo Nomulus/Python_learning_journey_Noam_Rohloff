@@ -1,4 +1,18 @@
-raw_users = ["  Alice", "bob", "ALICE", "charles", "  bob  ", "Alice", "David"]
+def main():
+    raw_users = ["  Alice", "bob", "ALICE", "charles", "  bob  ", "Alice", "David"]
+    print(clean_users(raw_users))
+
+def clean_users(raw_users):
+    users = []
+
+    for user in raw_users:
+        user = user.strip().capitalize()
+        users.append(user)
+
+    return set(users)
+
+if  __name__ == "__main__":
+    main()
 
 # Aufgabe: 
 # Erstelle eine neue Liste, in der jeder Name:
