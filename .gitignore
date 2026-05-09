@@ -422,3 +422,7 @@ FodyWeavers.xsd
 price_over_time.json
 price_over_time.json
 price_over_time.json
+
+# Virtual environnement
+.venv
+env
