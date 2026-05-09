@@ -23,7 +23,7 @@ class CheckBoxFrame_left(customtkinter.CTkFrame):
             self,
             variable=self.time_offset_var,
             offvalue=True,
-            onValue=False,
+            onvalue=False,
             text="hide time offset",
         )
         self.checkbox_time_offset.grid(
