@@ -6,32 +6,33 @@ Falls ein Wert 100 kV überschreitet, soll eine Warnung ausgegeben werden.
 
 Berechne den Durchschnitt der gültigen Werte. 
 
-messwerte = [12.5, -1.0, 95.0, 110.2, 88.7]"""
+measurements = [12.5, -1.0, 95.0, 110.2, 88.7]"""
 
 def main():
-    messwerte = [12.5, -1.0, 95.0, 110.2, 88.7]
+    measurements = [12.5, -1.0, 95.0, 110.2, 88.7]
 
-    print(validate_measurements(messwerte))
+    clean_data = validate_measurements(measurements)
+    print(f"clean data: {clean_data[0]}, average kV: {clean_data[1]}")
     
 
-def validate_measurements(messwerte):
-    """Function to validate measurements and warn of high voltages
+def validate_measurements(measurements):
+    """Function to validate measurements and warn of high voltages and return the average
     
-    param messwerte: list = List of measurements to be evaluated
+    param measurements: list = List of measurements to be evaluated
+
     return clean: list = list of all the clean measurements
+    return average: float = the average of the clean data
     """
 
-    clean = []
-    for measurement in messwerte:
-        if measurement <0:
-            pass
-        else:
-            clean.append(measurement)
-        
+    clean = [measurement for measurement in measurements if measurement>= 0]
+    
+    for measurement in clean:
         if measurement > 100:
             print(f"warning, {measurement} kV.")
-    
-    return clean
+
+    average = sum(clean)/len(clean)
+
+    return clean, average
 
 
 
