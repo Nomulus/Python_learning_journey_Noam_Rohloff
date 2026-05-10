@@ -426,3 +426,9 @@ price_over_time.json
 # Virtual environnement
 .venv
 env
+
+#file manipulation training:
+
+output.txt
+
+output.json
